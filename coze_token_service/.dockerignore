@@ -1,0 +1,15 @@
+# Ignore build artifacts
+target/
+**/target/
+
+# Ignore git directory
+.git/
+**/.git/
+
+# Ignore local environment file (should be passed at runtime)
+.env
+**/.env
+
+# Ignore OS-specific files
+.DS_Store
+**/.DS_Store

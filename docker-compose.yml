@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  token-service:
+    build:
+      context: ./coze_token_service # Build context is the service directory
+      dockerfile: Dockerfile
+    image: coze-token-service:local # Tag the image for local use
+    container_name: coze-token-service-dev
+    ports:
+      - "9000:9000" # Map container port 9000 to host port 9000
+    env_file:
+      - ./coze_token_service/.env # Load environment variables from the .env file
+    restart: unless-stopped

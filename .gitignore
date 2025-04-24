@@ -1,0 +1,26 @@
+# Environment variables
+**/.env
+
+# macOS specific
+.DS_Store
+
+# Python virtual environment
+.py3venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Sensitive files in coze_agent_service
+coze_agent_service/res/.private_key.pem
+coze_agent_service/res/.public_key.pem
+coze_agent_service/res/.my_token.txt
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+
+coze_token_service/target/
+coze_token_service/.env
