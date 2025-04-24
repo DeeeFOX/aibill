@@ -6,7 +6,7 @@ FROM rust:1.86-slim as builder
 WORKDIR /usr/src/app
 
 # Copy the Cargo manifest and lock file
-COPY Cargo.toml Cargo.lock ./
+COPY coze_token_service/Cargo.toml coze_token_service/Cargo.lock ./
 
 # Install necessary build dependencies (OpenSSL dev libraries and pkg-config)
 RUN apt-get update && apt-get install -y --no-install-recommends pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*
@@ -18,7 +18,7 @@ RUN cargo build --release
 RUN rm -rf src
 
 # Copy the actual source code
-COPY src ./src
+COPY coze_token_service/src ./src
 
 # Build the application in release mode
 # Ensure the target directory is clean before the final build
