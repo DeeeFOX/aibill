@@ -3,7 +3,7 @@ version: '3.8'
 services:
   token-service:
     build:
-      context: ./coze_token_service # Build context is the service directory
+      context: . # Build context is the root directory
       dockerfile: Dockerfile
     image: coze-token-service:local # Tag the image for local use
     container_name: coze-token-service-dev

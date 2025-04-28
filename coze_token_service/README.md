@@ -130,6 +130,28 @@ Generates a JWT token and immediately exchanges it with the Coze API for a final
       "duration_seconds": 3600
     }'
     ```
+    
+*   **Example (cURL):**
+    ```bash
+    curl -i -X POST 'http://localhost:9000/resend' \
+        -H 'Content-Type: application/json' \
+        -d '{
+        "location": "https://open.feishu.cn/open-apis/bitable/v1/apps/DC1sb1XABavEDfszxSpcyEtankg/tables/tbl5kDOiahgZrtCO/records/batch_create",
+        "headers": {
+            "Authorization": "Bearer xxxx"
+        },
+        "params": {
+            "records": [
+                {
+                    "fields": "{\"收支类型\":\"支出\",\"款项金额\":14.91,\"消费类型\":\"交通\",\"流水说明\":\"财付通-滴滴出行\",\"日期时间\":1745809165,\"收入方\":\"滴滴出行\",\"支出方\":\"用户\",\"备注\":\"\"}"
+                }
+            ]
+        },
+        "commands": {
+            "json_parse": ["$.params.records[*].fields"]
+        }
+    }
+    ```
 
 ## Deployment (Production/Testing)
 
