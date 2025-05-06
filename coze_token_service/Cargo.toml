@@ -1,6 +1,6 @@
 [package]
 name = "coze_token_service"
-version = "0.1.0"
+version = "0.2.1"
 edition = "2021"
 
 [dependencies]
@@ -15,3 +15,12 @@ regex = "1.11.1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tokio = { version = "1.44", features = ["full", "macros", "rt-multi-thread"] }
+openssl = { version = "0.10", features = ["vendored"] }
+
+# 添加 release的体积优化配置
+[profile.release]
+lto = "thin"        # 比 "fat" 更平衡体积/性能
+codegen-units = 1   # 减少代码生成单元
+strip = true        # 自动去除符号
+panic = "abort"     # 禁用堆栈展开
+opt-level = "z"     # 最小体积优化

@@ -3,8 +3,13 @@ version: '3.8'
 services:
   token-service:
     build:
-      context: . # Build context is the root directory
+      context: .
       dockerfile: Dockerfile
+      args:
+        - BUILDPLATFORM=${BUILDPLATFORM:-linux/arm64}
+        - TARGETPLATFORM=${TARGETPLATFORM:-linux/arm64} 
+        - TARGET=${TARGET:-aarch64-unknown-linux-musl}
+      platform: ${TARGETPLATFORM:-linux/arm64}
     image: coze-token-service:local # Tag the image for local use
     container_name: coze-token-service-dev
     ports:

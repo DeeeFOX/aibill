@@ -24,3 +24,5 @@ coze_agent_service/res/.my_token.txt
 
 coze_token_service/target/
 coze_token_service/.env
+
+**/.*config

@@ -5,25 +5,38 @@ use tracing::info;
 
 #[tokio::main]
 async fn main() {
-    // Initialize tracing
+    // Initialize tracing with environment-based default level
+    let default_level = if std::env::var("ENVIRONMENT").unwrap_or_default() == "production" {
+        "info"
+    } else {
+        "debug"
+    };
+    
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| "info".into()),
+                .unwrap_or_else(|_| default_level.into()),
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
 
     info!("Starting Coze Token Service");
+    info!("Loading configuration...");
 
     let config = config::config::load_config();
-    let app = create_router().with_state(config.clone());
-
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:9000") // Assuming a default server address or get from env if needed
-        .await
-        .unwrap();
+    info!("Configuration loaded successfully");
     
-    info!("Listening on {}", listener.local_addr().unwrap());
+    info!("Creating router...");
+    let app = create_router().with_state(config.clone());
+    info!("Router created successfully");
+
+    info!("Binding TCP listener on 0.0.0.0:9000...");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:9000")
+        .await
+        .expect("Failed to bind TCP listener");
+    
+    info!("Successfully listening on {}", listener.local_addr().unwrap());
+    info!("Server is ready to accept connections");
 
     axum::serve(listener, app)
         .await
