@@ -213,7 +213,9 @@ pub async fn resend_handler(
         Ok(response) => {
             let status = axum::http::StatusCode::from_u16(response.status().as_u16()).unwrap_or(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
             info!("Forwarded request returned status: {}", status);
-            let body = response.bytes().await.unwrap_or_default();
+            let resp_str = response.text().await.unwrap_or_else(|_| String::from("Failed to read response text"));
+            debug!("Response text: {:?}", resp_str);
+            let body = Json(serde_json::json!({"response": resp_str}));
             (status, body).into_response()
         }
         Err(e) => {
